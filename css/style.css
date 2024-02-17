@@ -481,26 +481,26 @@ a:hover {
 }
 
 .navbar-b.navbar-reduce .nav-link {
-  color: #0078ff;
+  color: #070707;
 }
 
 .navbar-b.navbar-reduce .nav-link:before {
-  background-color: #0078ff;
+  background-color: #070707;
 }
 
 .navbar-b.navbar-reduce .nav-link:hover {
-  color: #0078ff;
+  color: #070707;
 }
 
 .navbar-b.navbar-reduce .show > .nav-link,
 .navbar-b.navbar-reduce .active > .nav-link,
 .navbar-b.navbar-reduce .nav-link.show,
 .navbar-b.navbar-reduce .nav-link.active {
-  color: #0078ff;
+  color: #070707;
 }
 
 .navbar-b.navbar-reduce .navbar-brand {
-  color: #0078ff;
+  color: #070707;
 }
 
 .navbar-b.navbar-reduce .navbar-toggler span {
@@ -511,6 +511,11 @@ a:hover {
   color: #fff;
   font-size: 1.6rem;
   font-weight: 600;
+}
+
+.navbar-brand:hover {
+  text-decoration: none;
+  opacity: 0.5;
 }
 
 .navbar-b .navbar-nav .dropdown-item.show .dropdown-menu,
