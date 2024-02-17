@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
   "use strict";
 
   //Contact
-  $('form.contactForm').submit(function() {
+  $('form.contactForm').submit(function(event) {
     var f = $(this).find('.form-group'),
       ferror = false,
       emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
@@ -92,26 +92,59 @@ jQuery(document).ready(function($) {
     else var str = $(this).serialize();
     var action = $(this).attr('action');
     if( ! action ) {
-      action = 'contactform/contactform.php';
+      action = 'https://formspree.io/f/mayropez';
     }
-    $.ajax({
-      type: "POST",
-      url: action,
-      data: str,
-      success: function(msg) {
-        // alert(msg);
-        if (msg == 'OK') {
-          $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
-        } else {
+    var form = document.getElementById("my-form");
+    var status = document.getElementById("errormessage");
+    var data1 = new FormData(event.target);
+    fetch(action, {
+      method: "POST",
+      body: data1,
+      headers: {
+          'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        $("#sendmessage").addClass("show");
+        $("#errormessage").removeClass("show");
+        $('.contactForm').find("input, textarea").val("");
+        form.reset()
+      } else {
+        response.json().then(data => {
           $("#sendmessage").removeClass("show");
           $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
-
+          if (Object.hasOwn(data, 'errors')) {
+            $('#errormessage').html(data["errors"].map(error => error["message"]).join(", "));
+            status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+          } else {
+            $('#errormessage').html("Oops! No pudimos enviar el mensaje, utiliza WhatsApp para comunicarte con nosotros.");
+          }
+        })
       }
+    }).catch(error => {
+      $("#sendmessage").removeClass("show");
+      $("#errormessage").addClass("show");
+      $('#errormessage').html("Oops! No pudimos enviar el mensaje, utiliza WhatsApp para comunicarte con nosotros 2.");
     });
+
+    // $.ajax({
+    //   type: "POST",
+    //   url: action,
+    //   data: str,
+    //   success: function(msg) {
+    //     // alert(msg);
+    //     if (msg == 'OK') {
+    //       $("#sendmessage").addClass("show");
+    //       $("#errormessage").removeClass("show");
+    //       $('.contactForm').find("input, textarea").val("");
+    //     } else {
+    //       $("#sendmessage").removeClass("show");
+    //       $("#errormessage").addClass("show");
+    //       $('#errormessage').html(msg);
+    //     }
+
+    //   }
+    // });
     return false;
   });
 

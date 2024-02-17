@@ -1102,7 +1102,7 @@ footer .credits a {
   display: none;
   text-align: center;
   padding: 15px;
-  font-weight: 600;
+  /* font-weight: 600; */
   margin-bottom: 15px;
 }
 
@@ -1267,4 +1267,12 @@ footer .credits a {
   .back-to-top {
     bottom: 15px;
   }
+}
+
+#g-recaptcha-response {
+  display: block !important;
+  position: absolute;
+  margin: -50px 0 0 0 !important;
+  z-index: -999999;
+  opacity: 0;
 }
